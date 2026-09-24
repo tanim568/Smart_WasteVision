@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model checkpoints and experiment artifacts
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+models/
+runs/
+wandb/
+
+# Dataset / downloaded archives
+data/
+dataset/
+datasets/
+*.zip
+*.tar
+*.tar.gz
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
