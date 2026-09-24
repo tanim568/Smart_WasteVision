@@ -1,12 +1,12 @@
 # Smart WasteVision
 
-A deep learning image classification project for classifying waste images into six categories using a custom CNN and ResNet18 transfer learning.
+A deep learning image classification project for classifying waste images into six categories using CNNs and ResNet18 transfer learning.
 
 ## Overview
 
-Smart WasteVision compares several CNN-based approaches for waste classification on the TrashNet dataset, progressing from a custom CNN baseline to transfer learning and fine-tuning with ResNet18.
+Smart WasteVision compares multiple image-classification approaches on the TrashNet dataset, progressing from a custom CNN to ResNet18 transfer learning and fine-tuning.
 
-The selected final experiment uses a **class-weighted, fine-tuned ResNet18**.
+The final reported model is a **class-weighted, fine-tuned ResNet18** selected using validation performance.
 
 ## Classes
 
@@ -19,18 +19,19 @@ The selected final experiment uses a **class-weighted, fine-tuned ResNet18**.
 
 ## Project Workflow
 
-1. Dataset inspection and duplicate removal
-2. Class distribution analysis
-3. Stratified train/validation/test split
-4. Image transforms and DataLoader setup
-5. Custom CNN experiments
-6. ResNet18 transfer learning
-7. ResNet18 fine-tuning
-8. Class-weighted fine-tuning
-9. Validation-based model comparison
-10. Final test evaluation
-11. Confusion matrix and error analysis
-12. Single-image prediction
+1. Dataset inspection and cleaning
+2. Duplicate-image detection
+3. Class distribution analysis
+4. Stratified train/validation/test split
+5. Image preprocessing and augmentation
+6. Custom CNN experiments
+7. ResNet18 transfer learning
+8. ResNet18 fine-tuning
+9. Class-weighted fine-tuning
+10. Validation-based model selection
+11. Final test evaluation
+12. Confusion matrix and error analysis
+13. Single-image prediction
 
 ## Model Comparison
 
@@ -42,7 +43,7 @@ The selected final experiment uses a **class-weighted, fine-tuned ResNet18**.
 | ResNet18, fine-tuned | 90.24% | 0.8816 |
 | ResNet18, fine-tuned + class-weighted | 89.18% | **0.8862** |
 
-The final experiment was selected using validation performance, with **Macro F1** considered important because the dataset is imbalanced. Class weighting mainly improved validation recall for the smaller **trash** class from 0.65 to 0.80.
+The class-weighted fine-tuned ResNet18 was selected based on validation Macro F1. Class weighting mainly improved recall for the smaller **trash** class.
 
 ## Final Test Results
 
@@ -62,38 +63,38 @@ The final experiment was selected using validation performance, with **Macro F1*
 | Plastic | 0.84 | 0.89 | 0.86 |
 | Trash | 0.95 | 0.90 | 0.93 |
 
-## Confusion Matrix
+## Error Analysis
 
-The final confusion matrix shows that most test samples were classified correctly.
+There were **46 incorrect predictions** in the final test set.
 
-The most frequent error patterns were:
+The most frequent confusion patterns were:
 
 - **Glass → Metal:** 11
 - **Glass → Plastic:** 8
 - **Plastic → Metal:** 5
 - **Cardboard → Paper:** 4
 
-Visual inspection suggests that many remaining errors involve objects with similar visual/material characteristics.
+These errors mainly occurred between visually similar materials or objects.
 
 ## Dataset
 
-The project uses the **TrashNet** dataset and its `dataset-resized` images.
+The project uses the **TrashNet** dataset and its dataset-resized images.
 
 - Raw images inspected: **2,527**
 - Exact duplicate images found: **3**
 - Images remaining after duplicate removal: **2,524**
 - Classes: **6**
 
-The images were captured under relatively controlled conditions, so performance on cluttered real-world photographs has not been established by this project.
+The dataset contains relatively controlled image backgrounds and capture conditions, so performance on cluttered real-world photographs has not been established by this project.
 
 ## Limitations
 
 - The dataset is relatively small.
-- The classes are imbalanced, especially the `trash` class.
+- The classes are imbalanced, especially `trash`.
 - Images have relatively similar capture conditions.
 - Visually similar materials can be difficult to distinguish.
-- Each experiment was trained once using a single split.
-- The final model weights are not included in the repository.
+- Each experiment was trained once using a fixed split.
+- The trained model weights are not included in the repository.
 
 ## Tech Stack
 
@@ -109,7 +110,7 @@ The images were captured under relatively controlled conditions, so performance 
 
 ## Project Structure
 
-- `Smart_WasteVision_Clean.ipynb` — cleaned project notebook
+- `Smart_WasteVision_Portfolio.ipynb` — cleaned portfolio notebook
 - `README.md` — project documentation
 - `requirements.txt` — Python dependencies
 
@@ -117,7 +118,7 @@ The images were captured under relatively controlled conditions, so performance 
 
 1. Clone the repository.
 2. Install the dependencies from `requirements.txt`.
-3. Open `Smart_WasteVision_Clean.ipynb` in Google Colab or Jupyter.
+3. Open `Smart_WasteVision_Portfolio.ipynb` in Google Colab or Jupyter.
 4. Prepare/download the TrashNet dataset as described in the notebook.
 5. Run the notebook from the beginning.
 
@@ -125,7 +126,7 @@ Training the models again may produce slightly different results because of trai
 
 ## Key Takeaway
 
-Transfer learning and fine-tuning with ResNet18 produced a substantial improvement over the custom CNN experiments. The selected class-weighted fine-tuned ResNet18 achieved **87.86% test accuracy** and **0.8837 test Macro F1** on 379 held-out test images.
+The project demonstrates the progression from a custom CNN baseline to transfer learning and fine-tuning with ResNet18. The final reported class-weighted fine-tuned ResNet18 achieved **87.86% test accuracy** and **0.8837 test Macro F1** on 379 held-out test images.
 
 ## Author
 
