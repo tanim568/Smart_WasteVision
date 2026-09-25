@@ -18,7 +18,6 @@ env/
 
 # Model checkpoints and experiment artifacts
 *.pt
-*.pth
 *.ckpt
 checkpoints/
 models/
