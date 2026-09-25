@@ -1,8 +1,8 @@
 """Smart WasteVision — Gradio inference app (Render Free compatible).
 
 Loads best_model_resnet18_weighted_finetuned.pth, which was produced by the training
-notebook (Section 11). The architecture below must match the notebook's
-build_resnet18_classifier(): ResNet18 with fc = Dropout(0.4) + Linear(512, 6).
+notebook. The architecture below matches the final notebook implementation:
+ResNet18 with fc = Dropout(0.4) + Linear(512, 6).
 """
 import os
 
@@ -13,15 +13,10 @@ from torchvision import models, transforms
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "best_model_resnet18_weighted_finetuned.pth")
-
-# Same order as the notebook's CLASS_TO_IDX (alphabetical).
 CLASSES = ["cardboard", "glass", "metal", "paper", "plastic", "trash"]
-
-# Render Free has no GPU and very little CPU/RAM.
 DEVICE = torch.device("cpu")
 torch.set_num_threads(1)
 
-# Same preprocessing as the notebook's validation/test transform.
 inference_transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
@@ -32,18 +27,17 @@ inference_transform = transforms.Compose([
 def load_model():
     if not os.path.exists(MODEL_PATH):
         raise FileNotFoundError(
-            f"Checkpoint not found: {MODEL_PATH}. Commit "
-            "best_model_resnet18_weighted_finetuned.pth next to app.py."
+            f"Checkpoint not found: {MODEL_PATH}. Commit best_model_resnet18_weighted_finetuned.pth next to app.py."
         )
 
-    model = models.resnet18(weights=None)          # no pretrained download; weights come from the checkpoint
+    model = models.resnet18(weights=None)
     model.fc = nn.Sequential(
         nn.Dropout(0.4),
         nn.Linear(model.fc.in_features, len(CLASSES)),
     )
 
-    state_dict = torch.load(MODEL_PATH, map_location=DEVICE, weights_only=True)
-    model.load_state_dict(state_dict)              # strict: fails loudly on any mismatch
+    state_dict = torch.load(MODEL_PATH, map_location=DEVICE)
+    model.load_state_dict(state_dict, strict=True)
     model.to(DEVICE)
     model.eval()
     return model
@@ -76,8 +70,8 @@ demo = gr.Interface(
     flagging_mode="never",
 )
 
+
 if __name__ == "__main__":
-    # Render provides the port in $PORT and requires binding to 0.0.0.0.
     demo.launch(
         server_name="0.0.0.0",
         server_port=int(os.environ.get("PORT", 7860)),
