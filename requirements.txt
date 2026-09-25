@@ -1,5 +1,5 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.5.1+cpu
-torchvision==0.20.1+cpu
+torch==2.9.0+cpu
+torchvision==0.24.0+cpu
 gradio>=5.0,<6
 Pillow
